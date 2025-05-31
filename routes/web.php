@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+use App\Models\User; // Ensure User model exists
+use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +32,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
+
+Route::get('/place-order', [OrderController::class, 'placeOrder']); // Route to place order
+// Route::post('/register-user', [RegisterController::class, 'register']);
+Route::post('/register-user', function () {
+    return response()->json(['message' => 'This is a placeholder for user registration.']);
+});
+
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    dd("clear");
+});
+
+require __DIR__ . '/auth.php';
